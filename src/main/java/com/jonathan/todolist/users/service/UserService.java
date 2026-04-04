@@ -13,14 +13,17 @@ public class UserService {
     UserRepository userRepository;
 
     public UserModel execute(UserModel userModel){
-        this.userRepository.findByUsername(userModel.getUsername()).ifPresent((UserModel user)-> {
+        /*
+        this.userRepository.findByLogin(userModel.getLogin()).ifPresent((UserModel user)-> {
             throw new UserFoundException();
-            /*
+            });
+
             É interessante usar o .orElseThrow(),
             acredito ser mais perfomático.
             Mas como o banco é o H2, sempre dará o exception
+
             * */
-        });
+
         return this.userRepository.save(userModel);
     }
 }
