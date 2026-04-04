@@ -19,9 +19,12 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private String username;
+    @Column(unique = true, nullable = false)
+    private String login;
     private String password;
-    private String name;
+
+    @Column(nullable = false)
+    private String role;
 
     @CreationTimestamp //Cria automaticamente quando o dado for criado
     private LocalDateTime createdAt;
