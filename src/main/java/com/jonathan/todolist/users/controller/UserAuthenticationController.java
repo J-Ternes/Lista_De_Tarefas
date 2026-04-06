@@ -42,13 +42,7 @@ public class UserAuthenticationController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterDTO data){
 
-        if(this.userRepository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password()); //Irá criptografar a senha
-        UserModel newUser = new UserModel(data.login(), encryptedPassword, data.role());
-
-        this.userRepository.save(newUser);
-
+        authorizationService.NewUser(data);
         return ResponseEntity.ok().build();
 
     }
