@@ -8,6 +8,8 @@ import com.jonathan.todolist.users.model.RegisterDTO;
 import com.jonathan.todolist.users.model.UserModel;
 import com.jonathan.todolist.users.repository.UserRepository;
 import com.jonathan.todolist.users.service.AuthorizationService;
+import com.jonathan.todolist.users.service.LoginAuthorizationService;
+import com.jonathan.todolist.users.service.NewUserAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.ResponseEntity;
@@ -26,23 +28,24 @@ public class UserAuthenticationController {
     @Autowired
     private UserRepository userRepository;
 
+
     @Autowired
-    private AuthorizationService authorizationService;
+    NewUserAuthorizationService newUserAuthorizationService;
 
-
-
+    @Autowired
+    LoginAuthorizationService loginAuthorizationService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthenticationDTO data ){
 
-      String token = authorizationService.LoginAuthorization(data);
+      String token = loginAuthorizationService.LoginAuthorization(data);
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterDTO data){
 
-        authorizationService.NewUser(data);
+        newUserAuthorizationService.NewUser(data);
         return ResponseEntity.ok().build();
 
     }
