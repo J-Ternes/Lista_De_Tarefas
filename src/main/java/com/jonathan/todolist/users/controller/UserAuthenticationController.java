@@ -7,6 +7,7 @@ import com.jonathan.todolist.users.model.LoginResponseDTO;
 import com.jonathan.todolist.users.model.RegisterDTO;
 import com.jonathan.todolist.users.model.UserModel;
 import com.jonathan.todolist.users.repository.UserRepository;
+import com.jonathan.todolist.users.service.AuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.ResponseEntity;
@@ -22,25 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class UserAuthenticationController {
 
-
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private TokenService tokenService;
+    private AuthorizationService authorizationService;
+
+
 
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthenticationDTO data ){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        var token = tokenService.generateToken((UserModel) auth.getPrincipal());
-
+      String token = authorizationService.LoginAuthorization(data);
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
