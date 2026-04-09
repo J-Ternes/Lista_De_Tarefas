@@ -1,6 +1,6 @@
-package com.jonathan.todolist.users.handler;
+package com.jonathan.todolist.handler;
 
-import com.jonathan.todolist.users.exceptions.UserFoundException;
+import com.jonathan.todolist.exception.UserFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

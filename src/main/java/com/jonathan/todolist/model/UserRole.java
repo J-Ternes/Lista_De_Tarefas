@@ -1,4 +1,4 @@
-package com.jonathan.todolist.users.model;
+package com.jonathan.todolist.model;
 
 public enum UserRole {
     ADMIN("Admin"),

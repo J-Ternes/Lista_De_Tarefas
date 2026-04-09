@@ -1,4 +1,4 @@
-package com.jonathan.todolist.users.exceptions;
+package com.jonathan.todolist.exception;
 
 public class UserFoundException extends RuntimeException {
     public UserFoundException() {

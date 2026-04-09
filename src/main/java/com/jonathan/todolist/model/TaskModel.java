@@ -1,4 +1,4 @@
-package com.jonathan.todolist.task.model;
+package com.jonathan.todolist.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

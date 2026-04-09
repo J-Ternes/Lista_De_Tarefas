@@ -1,7 +1,7 @@
-package com.jonathan.todolist.task.controller;
+package com.jonathan.todolist.controller;
 
-import com.jonathan.todolist.task.model.TaskModel;
-import com.jonathan.todolist.task.service.TaskService;
+import com.jonathan.todolist.model.TaskModel;
+import com.jonathan.todolist.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,8 @@
-package com.jonathan.todolist.task.service;
+package com.jonathan.todolist.service;
 
 
-import com.jonathan.todolist.task.model.TaskModel;
-import com.jonathan.todolist.task.repository.TaskRepository;
+import com.jonathan.todolist.model.TaskModel;
+import com.jonathan.todolist.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
