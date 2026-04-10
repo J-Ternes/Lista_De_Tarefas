@@ -24,6 +24,7 @@ public class UserModel {
     private String password;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @CreationTimestamp //Cria automaticamente quando o dado for criado

@@ -1,13 +1,18 @@
 package com.jonathan.todolist.controller;
 
+import com.jonathan.todolist.dto.UserResponseDTO;
+import com.jonathan.todolist.model.UserModel;
+import com.jonathan.todolist.model.UserRole;
 import com.jonathan.todolist.repository.UserRepository;
 import com.jonathan.todolist.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -16,22 +21,12 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    /*
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthenticationDTO data ){
+    @PostMapping("/cadastro")
+    public ResponseEntity cadastrar(@RequestBody UserModel user){
+        userService.cadastrarNewUser(user);
 
-      String token = loginAuthorizationService.LoginAuthorization(data);
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.ok("Novo cadastro efetuado com sucesso");
     }
-    */
-     /*
-
-    @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegisterDTO data){
-        newUserAuthorizationService.NewUser(data);
-        return ResponseEntity.ok().build();
-    }
-    */
 
     @GetMapping("/dados")
     public ResponseEntity dados(){
@@ -39,4 +34,9 @@ public class UserController {
     }
 
 
+    @GetMapping("/role/{role}")
+    public ResponseEntity buscaRole(@PathVariable UserRole role){
+        return ResponseEntity.ok( userService.buscarPorRole(role));
+
+    }
 }
