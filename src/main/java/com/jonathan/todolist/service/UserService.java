@@ -36,4 +36,10 @@ public class UserService {
          return resultRole.stream().map(user-> new UserResponseDTO(
                  user.getLogin(),user.getRole())).toList();
     }
+
+    public void delete (String login){
+        UserModel user = userRepository.findByLogin(login);
+        if(user == null) throw new RuntimeException("Usuário não encontrado");
+        userRepository.delete(user);
+    }
 }
