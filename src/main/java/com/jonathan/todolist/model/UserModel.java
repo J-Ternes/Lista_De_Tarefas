@@ -27,6 +27,9 @@ public class UserModel {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @Column(nullable = false)
+    private boolean active = true; //Para dizer se o usuário está ativo ou não
+
     @CreationTimestamp //Cria automaticamente quando o dado for criado
     private LocalDateTime createdAt;
 

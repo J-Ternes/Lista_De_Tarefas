@@ -18,8 +18,8 @@ public class UserService {
     UserRepository userRepository;
 
 
-    public List<UserResponseDTO> mostrardados(){
-       return userRepository.findAll().stream().map(user -> new UserResponseDTO(
+    public List<UserResponseDTO> getAllUsers(){
+       return userRepository.findByActiveTrue().stream().map(user -> new UserResponseDTO(
                user.getLogin(),user.getRole())).toList();
     }
 
@@ -40,6 +40,8 @@ public class UserService {
     public void delete (String login){
         UserModel user = userRepository.findByLogin(login);
         if(user == null) throw new RuntimeException("Usuário não encontrado");
-        userRepository.delete(user);
+        //userRepository.delete(user) -> //Hard Delete -> Não
+        user.setActive(false);
+        userRepository.save(user);
     }
 }

@@ -30,7 +30,7 @@ public class UserController {
 
     @GetMapping("/dados")
     public ResponseEntity dados(){
-        return ResponseEntity.ok(userService.mostrardados());
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
 
@@ -44,4 +44,6 @@ public class UserController {
         userService.delete(login);
         return ResponseEntity.noContent().build(); //Retorna Http 204 (Padrao Rest)
     }
+
+
 }
