@@ -1,6 +1,7 @@
 package com.jonathan.todolist.controller;
 
 import com.jonathan.todolist.dto.UserResponseDTO;
+import com.jonathan.todolist.dto.UserUpdateDTO;
 import com.jonathan.todolist.model.UserModel;
 import com.jonathan.todolist.model.UserRole;
 import com.jonathan.todolist.repository.UserRepository;
@@ -8,8 +9,6 @@ import com.jonathan.todolist.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -45,5 +44,10 @@ public class UserController {
         return ResponseEntity.noContent().build(); //Retorna Http 204 (Padrao Rest)
     }
 
+    @PatchMapping("/update/{login}")
+    public ResponseEntity updatePartial(@PathVariable String login, @RequestBody UserUpdateDTO data ){
+         userService.updatePartial(login,data);
+        return ResponseEntity.ok("Atualização efetuada com sucesso!");
+    }
 
 }
