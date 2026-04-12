@@ -1,5 +1,6 @@
 package com.jonathan.todolist.controller;
 
+import com.jonathan.todolist.dto.UserRegisterDTO;
 import com.jonathan.todolist.dto.UserResponseDTO;
 import com.jonathan.todolist.dto.UserUpdateDTO;
 import com.jonathan.todolist.model.UserModel;
@@ -21,8 +22,8 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/cadastro")
-    public ResponseEntity cadastrar(@RequestBody UserModel user){
-        userService.cadastrarNewUser(user);
+    public ResponseEntity cadastrar(@RequestBody UserRegisterDTO data){
+        userService.cadastrarNewUser(data);
 
         return ResponseEntity.ok("Novo cadastro efetuado com sucesso");
     }
@@ -46,7 +47,7 @@ public class UserController {
 
     @PatchMapping("/update/{login}")
     public ResponseEntity updatePartial(@PathVariable String login, @RequestBody UserUpdateDTO data ){
-         userService.updatePartial(login,data);
+         userService.updateLogin(login,data);
         return ResponseEntity.ok("Atualização efetuada com sucesso!");
     }
 

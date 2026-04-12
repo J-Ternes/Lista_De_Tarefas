@@ -1,6 +1,7 @@
 package com.jonathan.todolist.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
@@ -17,9 +18,11 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @NotBlank
     @Column(unique = true, nullable = false)
     private String login;
 
+    @NotBlank
     @Column(nullable = false)
     private String password;
 
@@ -27,8 +30,8 @@ public class UserModel {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-
-    private boolean active = true; //Para dizer se o usuário está ativo ou não
+    @Column(nullable = false)
+    private Boolean active; //Para dizer se o usuário está ativo ou não
 
     @CreationTimestamp //Cria automaticamente quando o dado for criado
     private LocalDateTime createdAt;

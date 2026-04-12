@@ -1,5 +1,6 @@
 package com.jonathan.todolist.service;
 
+import com.jonathan.todolist.dto.UserRegisterDTO;
 import com.jonathan.todolist.dto.UserUpdateDTO;
 import com.jonathan.todolist.dto.UserResponseDTO;
 import com.jonathan.todolist.exception.NotFoundRoleException;
@@ -24,11 +25,17 @@ public class UserService {
                 user.getLogin(), user.getRole())).toList();
     }
 
-    public UserModel cadastrarNewUser(UserModel user) {
-        var result = userRepository.findByLogin(user.getLogin());
+    public UserModel cadastrarNewUser(UserRegisterDTO data) {
+        var result = userRepository.findByLogin(data.login());
 
         if (result != null) throw new UserFoundException();
-        return userRepository.save(user);
+        UserModel newUser = new UserModel();
+        newUser.setPassword(data.password());
+        newUser.setLogin(data.login());
+        newUser.setActive(true);
+        newUser.setRole(UserRole.USER);
+
+        return userRepository.save(newUser);
     }
 
     public List<UserResponseDTO> buscarPorRole(UserRole role) {
@@ -46,7 +53,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void updatePartial(String currentLogin, UserUpdateDTO data) {
+    public void updateLogin(String currentLogin, UserUpdateDTO data) {
         UserModel user = userRepository.findByLogin(currentLogin);
 
         if (user == null) throw new RuntimeException("Usuário não encontrado");
@@ -60,12 +67,6 @@ public class UserService {
 
             user.setLogin(data.login());
         }
-
-        //Verifica se quer mudar a senha
-        if (data.password() != null && data.password().isBlank()) {
-            user.setPassword(data.password());
-        }
        userRepository.save(user);
-
     }
 }
