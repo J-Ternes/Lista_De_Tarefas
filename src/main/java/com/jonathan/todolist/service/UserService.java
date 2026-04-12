@@ -58,15 +58,10 @@ public class UserService {
 
         if (user == null) throw new RuntimeException("Usuário não encontrado");
 
-        //Verifica se quer mudar login
-        if (data.login() != null && data.login().isBlank()) {
+        //Verifica se o novo login escolhido pelo usuário existe
+        if (userRepository.findByLogin(data.login()) != null) throw new RuntimeException("Esse usuário já está em uso");
 
-            //Verifica se o novo login escolhido pelo usuário existe
-            if (userRepository.findByLogin(data.login()) != null)
-                throw new RuntimeException("Esse usuário já está em uso");
-
-            user.setLogin(data.login());
-        }
+        user.setLogin(data.login());
        userRepository.save(user);
     }
 }
