@@ -39,7 +39,7 @@ public class UserController {
         return ResponseEntity.ok( userService.buscarPorRole(role));
     }
 
-    @DeleteMapping("/{login}")
+    @DeleteMapping("/delete/{login}")
     public ResponseEntity delete(@PathVariable String login){
         userService.delete(login);
         return ResponseEntity.noContent().build(); //Retorna Http 204 (Padrao Rest)

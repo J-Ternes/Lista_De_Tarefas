@@ -49,7 +49,7 @@ public class UserService {
         UserModel user = userRepository.findByLogin(login);
         if (user == null) throw new RuntimeException("Usuário não encontrado");
         //userRepository.delete(user) -> //Hard Delete -> Não
-        user.setActive(false);
+        user.setActive(false); //Soft Delete (È mais seguro) nao perde o dado para sempre
         userRepository.save(user);
     }
 
