@@ -1,5 +1,6 @@
 package com.jonathan.todolist.controller;
 
+import com.jonathan.todolist.dto.TasksRegisterDTO;
 import com.jonathan.todolist.model.TaskModel;
 import com.jonathan.todolist.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,9 @@ public class taskController {
     TaskService taskService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> create(@RequestBody TaskModel taskModel){
-        var result = taskService.execute(taskModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskModel);
+    public ResponseEntity create(@RequestBody TasksRegisterDTO registerDTO){
+        var result = taskService.execute(registerDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(registerDTO);
     }
+
 }
