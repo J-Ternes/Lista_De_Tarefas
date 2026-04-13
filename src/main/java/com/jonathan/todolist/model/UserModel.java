@@ -18,11 +18,11 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @NotBlank
+    @NotBlank(message = "O campo login é obrigatório!")
     @Column(unique = true, nullable = false)
     private String login;
 
-    @NotBlank
+    @NotBlank(message = "O campo password é obrigatório!")
     @Column(nullable = false)
     private String password;
 
