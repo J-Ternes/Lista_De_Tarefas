@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TaskService {
@@ -28,9 +29,14 @@ public class TaskService {
     }
 
     public List<TaskResponseDTO> getAll(){
-        return taskRepository.findAll().stream().map( task -> new TaskResponseDTO(
+        return taskRepository.findByFinalizarTarefaTrue().stream().map( task -> new TaskResponseDTO(
                 task.getTitulo(), task.getDataInicio(),task.getDataFim()
         )).toList();
     }
 
+    public void delete(UUID id){
+        TaskModel task = taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Tarefa nao encontrada"));
+        task.setFinalizarTarefa(true);
+        taskRepository.save(task);
+    }
 }

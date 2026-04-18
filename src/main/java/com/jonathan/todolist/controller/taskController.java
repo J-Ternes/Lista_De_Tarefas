@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/tasks")
 public class taskController {
@@ -24,5 +26,11 @@ public class taskController {
     @GetMapping("/dados")
     public ResponseEntity getAll(){
         return ResponseEntity.status(HttpStatus.OK).body(taskService.getAll());
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable UUID id){
+        taskService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
