@@ -1,7 +1,9 @@
 package com.jonathan.todolist.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,11 +31,13 @@ public class TaskModel {
     @Column(length = 50,nullable = false)
     private String titulo;
 
-    @NotBlank(message = "A data de início da tarefa é obrigatório")
+    @JsonFormat(pattern = "dd/MM/yyy HH:mm:ss")
+    @NotNull(message = "O campo de data início é obrigatório!")
     @Column(nullable = false)
     private LocalDateTime dataInicio;
 
-    @NotBlank(message = "A data de término da tarefa é obrigatório")
+    @JsonFormat(pattern = "dd/MM/yyy HH:mm:ss")
+    @NotNull(message = "O campo de data final é obrigatório!")
     @Column(nullable = false)
     private LocalDateTime dataFim;
 

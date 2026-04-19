@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface TaskRepository extends JpaRepository<TaskModel, UUID> {
 
 
-    List<TaskModel> findByFinalizarTarefaTrue();
+    List<TaskModel> findByFinalizarTarefaFalse();
     TaskModel findByIdAndFinalizarTarefaTrue(UUID id);
 
 

@@ -1,5 +1,6 @@
 package com.jonathan.todolist.controller;
 
+import com.jonathan.todolist.dto.TaskUpdateDTO;
 import com.jonathan.todolist.dto.TasksRegisterDTO;
 import com.jonathan.todolist.model.TaskModel;
 import com.jonathan.todolist.service.TaskService;
@@ -32,5 +33,12 @@ public class taskController {
     public ResponseEntity delete(@PathVariable UUID id){
         taskService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/atualizar/{id}")
+    public ResponseEntity update(@PathVariable UUID id, @RequestBody TaskUpdateDTO taskUpdate){
+        taskService.partialUpdate(id, taskUpdate);
+        return ResponseEntity.ok("Atualização realizada com sucesso!");
+
     }
 }
