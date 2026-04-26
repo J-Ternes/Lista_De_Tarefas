@@ -5,6 +5,7 @@ import com.jonathan.todolist.dto.UserUpdateDTO;
 import com.jonathan.todolist.dto.UserResponseDTO;
 import com.jonathan.todolist.exception.NotFoundRoleException;
 import com.jonathan.todolist.exception.UserFoundException;
+import com.jonathan.todolist.exception.UserNotFoundException;
 import com.jonathan.todolist.model.UserModel;
 import com.jonathan.todolist.model.UserRole;
 import com.jonathan.todolist.repository.UserRepository;
@@ -47,7 +48,7 @@ public class UserService {
 
     public void delete(String login) {
         UserModel user = userRepository.findByLogin(login);
-        if (user == null) throw new RuntimeException("Usuário não encontrado");
+        if (user == null) throw new UserNotFoundException();
         //userRepository.delete(user) -> //Hard Delete -> Não
         user.setActive(false); //Soft Delete (È mais seguro) nao perde o dado para sempre
         userRepository.save(user);
@@ -56,10 +57,10 @@ public class UserService {
     public void updateLogin(String currentLogin, UserUpdateDTO data) {
         UserModel user = userRepository.findByLogin(currentLogin);
 
-        if (user == null) throw new RuntimeException("Usuário não encontrado");
+        if (user == null) throw new UserNotFoundException();
 
         //Verifica se o novo login escolhido pelo usuário existe
-        if (userRepository.findByLogin(data.login()) != null) throw new RuntimeException("Esse usuário já está em uso");
+        if (userRepository.findByLogin(data.login()) != null) throw new UserFoundException();
 
         user.setLogin(data.login());
        userRepository.save(user);
