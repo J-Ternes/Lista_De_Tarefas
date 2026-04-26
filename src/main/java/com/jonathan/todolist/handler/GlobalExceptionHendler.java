@@ -1,6 +1,7 @@
 package com.jonathan.todolist.handler;
 
 import com.jonathan.todolist.exception.NotFoundRoleException;
+import com.jonathan.todolist.exception.TaskNotFoundException;
 import com.jonathan.todolist.exception.UserFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,12 @@ public class GlobalExceptionHendler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotFoundRoleException.class) //para pegar a classe que eu criei
     public ResponseEntity<String> notFoundRoleExceptionHandler (NotFoundRoleException notFoundRoleExceptionHandler){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não existe nenhum usuário com essa Role!");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe nenhum usuário com essa Role!");
+    }
+
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ResponseEntity<String> taskNotFoundException (TaskNotFoundException taskNotFoundException){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarefa não encontrada!");
     }
 
 }

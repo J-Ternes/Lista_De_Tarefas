@@ -4,6 +4,7 @@ package com.jonathan.todolist.service;
 import com.jonathan.todolist.dto.TaskResponseDTO;
 import com.jonathan.todolist.dto.TaskUpdateDTO;
 import com.jonathan.todolist.dto.TasksRegisterDTO;
+import com.jonathan.todolist.exception.TaskNotFoundException;
 import com.jonathan.todolist.model.TaskModel;
 import com.jonathan.todolist.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +37,13 @@ public class TaskService {
     }
 
     public void delete(UUID id){
-        TaskModel task = taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Tarefa não encontrada"));
+        TaskModel task = taskRepository.findById(id).orElseThrow(TaskNotFoundException::new);
         task.setFinalizarTarefa(true);
         taskRepository.save(task);
     }
 
     public void partialUpdate(UUID id, TaskUpdateDTO taskUpdate){
-        TaskModel task = taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task não encontrada"));
+        TaskModel task = taskRepository.findById(id).orElseThrow(TaskNotFoundException::new);
 
         //Atualiza o título. OBS: .isBlanck() so funciona para String por que ela pode vim vazia: "  " ou ""
         if(taskUpdate.titulo() != null && !taskUpdate.titulo().isBlank()) task.setTitulo(taskUpdate.titulo());
