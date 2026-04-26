@@ -17,9 +17,9 @@ public class GlobalExceptionHendler extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> userFoundExceptionHandler (UserFoundException userFoundException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário já existe!");
     }
-    undRoleException.class) //para pegar a classe que eu criei
-    public ResponseEntity<S
-    @ExceptionHandler(NotFotring> notFoundRoleExceptionHandler (NotFoundRoleException notFoundRoleExceptionHandler){
+
+    @ExceptionHandler(NotFoundRoleException.class) //para pegar a classe que eu criei
+    public ResponseEntity<String> notFoundRoleExceptionHandler (NotFoundRoleException notFoundRoleExceptionHandler){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe nenhum usuário com essa Role!");
     }
 
