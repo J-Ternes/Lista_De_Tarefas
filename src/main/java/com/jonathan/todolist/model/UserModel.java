@@ -11,11 +11,11 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "tb_users")
+@Entity(name = "users")
 public class UserModel {
 
     @Id //Informa que essa será a minha chave primária
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @NotBlank(message = "O campo login é obrigatório!")
@@ -33,7 +33,12 @@ public class UserModel {
     @Column(nullable = false)
     private Boolean active; //Para dizer se o usuário está ativo ou não
 
-    @CreationTimestamp //Cria automaticamente quando o dado for criado
-    private LocalDateTime createdAt;
+    @Column(name = "criado_em")
+    private LocalDateTime criadoEm;
+
+    @PrePersist
+    public void prePersist(){
+        criadoEm = LocalDateTime.now();
+    }
 
 }

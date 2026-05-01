@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
+
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,11 +17,11 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "tb_tasks")
+@Entity(name = "tasks")
 public class TaskModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(length = 100)
@@ -31,22 +31,29 @@ public class TaskModel {
     @Column(length = 50,nullable = false)
     private String titulo;
 
-    @JsonFormat(pattern = "dd/MM/yyy HH:mm:ss")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @NotNull(message = "O campo de data início é obrigatório!")
-    @Column(nullable = false)
+    @Column(nullable = false, name = "data_inicio")
     private LocalDateTime dataInicio;
 
-    @JsonFormat(pattern = "dd/MM/yyy HH:mm:ss")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @NotNull(message = "O campo de data final é obrigatório!")
-    @Column(nullable = false)
+    @Column(nullable = false, name = "data_fim")
     private LocalDateTime dataFim;
 
+    @Column(name = "finalizar_tarefa")
      private Boolean finalizarTarefa;
 
-    private UUID idUser;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserModel idUser;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    @Column(name = "criado_em")
+    private LocalDateTime criadoEm;
 
+    @PrePersist
+    public void prePersist(){
+        criadoEm = LocalDateTime.now();
+    }
 
 }

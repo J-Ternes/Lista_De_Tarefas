@@ -27,9 +27,10 @@ public class UserService {
     }
 
     public UserModel cadastrarNewUser(UserRegisterDTO data) {
-        var result = userRepository.findByLogin(data.login());
+        UserModel user = userRepository.findByLogin(data.login());
 
-        if (result != null) throw new UserFoundException();
+        if(user != null) throw new UserFoundException();
+
         UserModel newUser = new UserModel();
         newUser.setPassword(data.password());
         newUser.setLogin(data.login());
@@ -48,6 +49,7 @@ public class UserService {
 
     public void delete(String login) {
         UserModel user = userRepository.findByLogin(login);
+
         if (user == null) throw new UserNotFoundException();
         //userRepository.delete(user) -> //Hard Delete -> Não
         user.setActive(false); //Soft Delete (È mais seguro) nao perde o dado para sempre
