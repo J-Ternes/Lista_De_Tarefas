@@ -18,8 +18,6 @@ public class taskController {
     @Autowired
     TaskService taskService;
 
-
-
     @GetMapping("/dados")
     public ResponseEntity getAll(){
         return ResponseEntity.status(HttpStatus.OK).body(taskService.getAll());

@@ -1,11 +1,19 @@
 package com.jonathan.todolist.service;
 
+import com.jonathan.todolist.config.TokenConfig;
+import com.jonathan.todolist.dto.LoginRequestDTO;
+import com.jonathan.todolist.dto.LoginResponseDTO;
 import com.jonathan.todolist.dto.TaskUpdateDTO;
 import com.jonathan.todolist.dto.TasksRegisterDTO;
 import com.jonathan.todolist.exception.TaskNotFoundException;
 import com.jonathan.todolist.model.TaskModel;
+import com.jonathan.todolist.model.UserModel;
 import com.jonathan.todolist.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -16,6 +24,25 @@ public class TaskServiceAuth {
 
     @Autowired
     TaskRepository taskRepository;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    TokenConfig tokenConfig;
+
+    public LoginResponseDTO loginAuthToken(LoginRequestDTO request){
+
+        //Autentica o usuario utilizando o login e a senha
+        UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(request.login(), request.password());
+        Authentication authentication = authenticationManager.authenticate(userAndPass);
+
+        UserModel user = (UserModel) authentication.getPrincipal();
+        String token = tokenConfig.generateToken(user);
+
+        return new LoginResponseDTO(token);
+    }
+
 
     public TaskModel create(TasksRegisterDTO task){
         TaskModel newTasks = new TaskModel();

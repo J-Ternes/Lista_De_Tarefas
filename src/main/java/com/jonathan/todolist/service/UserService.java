@@ -10,6 +10,7 @@ import com.jonathan.todolist.model.UserModel;
 import com.jonathan.todolist.model.UserRole;
 import com.jonathan.todolist.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,10 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 
 
     public List<UserResponseDTO> getAllUsers() {
@@ -32,7 +37,7 @@ public class UserService {
         if(user != null) throw new UserFoundException();
 
         UserModel newUser = new UserModel();
-        newUser.setPassword(data.password());
+        newUser.setPassword(passwordEncoder.encode(data.password()));
         newUser.setLogin(data.login());
         newUser.setActive(true);
         newUser.setRole(UserRole.USER);
