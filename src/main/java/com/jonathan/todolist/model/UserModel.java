@@ -3,8 +3,8 @@ package com.jonathan.todolist.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
@@ -51,12 +51,18 @@ public class UserModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+       if(this.role == UserRole.ADMIN){
+           return List.of(
+                   new SimpleGrantedAuthority("ROLE_ADMIN"),
+                   new SimpleGrantedAuthority("ROLE_USER")
+           );
+       }
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return this.login;
     }
 
     @Override

@@ -1,15 +1,16 @@
 package com.jonathan.todolist.controller;
 
 import com.jonathan.todolist.dto.UserRegisterDTO;
-import com.jonathan.todolist.dto.UserResponseDTO;
 import com.jonathan.todolist.dto.UserUpdateDTO;
-import com.jonathan.todolist.model.UserModel;
 import com.jonathan.todolist.model.UserRole;
 import com.jonathan.todolist.repository.UserRepository;
 import com.jonathan.todolist.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -28,6 +29,7 @@ public class UserController {
         return ResponseEntity.ok("Novo cadastro efetuado com sucesso");
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/dados")
     public ResponseEntity dados(){
         return ResponseEntity.ok(userService.getAllUsers());
@@ -49,6 +51,13 @@ public class UserController {
     public ResponseEntity updatePartial(@PathVariable String login, @RequestBody UserUpdateDTO data ){
          userService.updateLogin(login,data);
         return ResponseEntity.ok("Atualização efetuada com sucesso!");
+    }
+
+    @PatchMapping("/promote/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity promoteUser(@PathVariable UUID id){
+        userService.promoteToAdmin(id);
+        return ResponseEntity.ok("Novo Admin cadastrado!");
     }
 
 }

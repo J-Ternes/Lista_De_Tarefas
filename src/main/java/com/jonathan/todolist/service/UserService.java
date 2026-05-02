@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -71,5 +73,11 @@ public class UserService {
 
         user.setLogin(data.login());
        userRepository.save(user);
+    }
+
+    public void promoteToAdmin (UUID id){
+        UserModel userId = userRepository.findById(id).orElseThrow(()->new UserNotFoundException());
+         userId.setRole(UserRole.ADMIN);
+         userRepository.save(userId);
     }
 }
