@@ -18,27 +18,13 @@ public class taskController {
     @Autowired
     TaskService taskService;
 
-    @PostMapping("/create")
-    public ResponseEntity create(@RequestBody TasksRegisterDTO registerDTO){
-        var result = taskService.execute(registerDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(registerDTO);
-    }
+
 
     @GetMapping("/dados")
     public ResponseEntity getAll(){
         return ResponseEntity.status(HttpStatus.OK).body(taskService.getAll());
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity delete(@PathVariable UUID id){
-        taskService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
 
-    @PatchMapping("/atualizar/{id}")
-    public ResponseEntity update(@PathVariable UUID id, @RequestBody TaskUpdateDTO taskUpdate){
-        taskService.partialUpdate(id, taskUpdate);
-        return ResponseEntity.ok("Atualização realizada com sucesso!");
 
-    }
 }
