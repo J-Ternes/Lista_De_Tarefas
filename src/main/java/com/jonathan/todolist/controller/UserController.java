@@ -1,5 +1,6 @@
 package com.jonathan.todolist.controller;
 
+import com.jonathan.todolist.config.JWTUserData;
 import com.jonathan.todolist.dto.UserRegisterDTO;
 import com.jonathan.todolist.dto.UserUpdateDTO;
 import com.jonathan.todolist.model.UserRole;
@@ -8,6 +9,7 @@ import com.jonathan.todolist.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -60,6 +62,13 @@ public class UserController {
     public ResponseEntity promoteUser(@PathVariable UUID id){
         userService.promoteToAdmin(id);
         return ResponseEntity.ok("Novo Admin cadastrado!");
+    }
+
+    @PatchMapping("/demote/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity demoteUSer(@PathVariable UUID id, @AuthenticationPrincipal JWTUserData logAdmin){
+        userService.demoteToUser(id, logAdmin.login());
+        return ResponseEntity.ok("Rebaixado para USER!");
     }
 
 }

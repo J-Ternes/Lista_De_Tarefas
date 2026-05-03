@@ -80,4 +80,14 @@ public class UserService {
          userId.setRole(UserRole.ADMIN);
          userRepository.save(userId);
     }
+
+    public void demoteToUser(UUID id, String logAdmin){
+        UserModel user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException());
+
+        if(user.getLogin().equals(logAdmin)){
+            throw new RuntimeException("Não pode rebaixar a si próprio");
+        }
+        user.setRole(UserRole.USER);
+        userRepository.save(user);
+    }
 }
