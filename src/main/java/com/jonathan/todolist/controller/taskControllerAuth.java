@@ -1,5 +1,6 @@
 package com.jonathan.todolist.controller;
 
+import com.jonathan.todolist.config.JWTUserData;
 import com.jonathan.todolist.dto.LoginRequestDTO;
 import com.jonathan.todolist.dto.LoginResponseDTO;
 import com.jonathan.todolist.dto.TaskUpdateDTO;
@@ -38,8 +39,8 @@ public class taskControllerAuth {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody TasksRegisterDTO registerDTO,
-                                 @AuthenticationPrincipal UserModel logUser){
-        var result = taskServiceAuth.create(registerDTO, logUser);
+                                 @AuthenticationPrincipal JWTUserData logUser){
+        var result = taskServiceAuth.create(registerDTO, logUser.login());
         return ResponseEntity.status(HttpStatus.CREATED).body(registerDTO);
     }
 

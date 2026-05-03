@@ -1,5 +1,6 @@
 package com.jonathan.todolist.service;
 
+import com.jonathan.todolist.config.JWTUserData;
 import com.jonathan.todolist.config.TokenConfig;
 import com.jonathan.todolist.dto.LoginRequestDTO;
 import com.jonathan.todolist.dto.LoginResponseDTO;
@@ -9,6 +10,7 @@ import com.jonathan.todolist.exception.TaskNotFoundException;
 import com.jonathan.todolist.model.TaskModel;
 import com.jonathan.todolist.model.UserModel;
 import com.jonathan.todolist.repository.TaskRepository;
+import com.jonathan.todolist.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +33,9 @@ public class TaskServiceAuth {
     @Autowired
     TokenConfig tokenConfig;
 
+    @Autowired
+    UserRepository userRepository;
+
     public LoginResponseDTO loginAuthToken(LoginRequestDTO request){
 
         //Autentica o usuario utilizando o login e a senha
@@ -44,14 +49,15 @@ public class TaskServiceAuth {
     }
 
 
-    public TaskModel create(TasksRegisterDTO task, UserModel logUser){
+    public TaskModel create(TasksRegisterDTO task, String logUser){
+        UserModel user = userRepository.findByLogin(logUser);
         TaskModel newTasks = new TaskModel();
         newTasks.setDescricao(task.descricao());
         newTasks.setTitulo(task.titulo());
         newTasks.setDataInicio(task.dataInicio());
         newTasks.setDataFim(task.dataFim());
         newTasks.setFinalizarTarefa(false);
-        newTasks.setIdUser(logUser);
+        newTasks.setIdUser(user);
 
         return this.taskRepository.save(newTasks);
 
