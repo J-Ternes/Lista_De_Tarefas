@@ -4,12 +4,14 @@ import com.jonathan.todolist.dto.LoginRequestDTO;
 import com.jonathan.todolist.dto.LoginResponseDTO;
 import com.jonathan.todolist.dto.TaskUpdateDTO;
 import com.jonathan.todolist.dto.TasksRegisterDTO;
+import com.jonathan.todolist.model.UserModel;
 import com.jonathan.todolist.repository.UserRepository;
 import com.jonathan.todolist.service.TaskServiceAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -24,6 +26,7 @@ public class taskControllerAuth {
     @Autowired
     UserRepository userRepository;
 
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login (@RequestBody LoginRequestDTO requestDTO){
         LoginResponseDTO response = taskServiceAuth.loginAuthToken(requestDTO);
@@ -34,8 +37,9 @@ public class taskControllerAuth {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity create(@RequestBody TasksRegisterDTO registerDTO){
-        var result = taskServiceAuth.create(registerDTO);
+    public ResponseEntity create(@RequestBody TasksRegisterDTO registerDTO,
+                                 @AuthenticationPrincipal UserModel logUser){
+        var result = taskServiceAuth.create(registerDTO, logUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(registerDTO);
     }
 

@@ -44,13 +44,14 @@ public class TaskServiceAuth {
     }
 
 
-    public TaskModel create(TasksRegisterDTO task){
+    public TaskModel create(TasksRegisterDTO task, UserModel logUser){
         TaskModel newTasks = new TaskModel();
         newTasks.setDescricao(task.descricao());
         newTasks.setTitulo(task.titulo());
         newTasks.setDataInicio(task.dataInicio());
         newTasks.setDataFim(task.dataFim());
         newTasks.setFinalizarTarefa(false);
+        newTasks.setIdUser(logUser);
 
         return this.taskRepository.save(newTasks);
 

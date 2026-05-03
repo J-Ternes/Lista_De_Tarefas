@@ -41,11 +41,13 @@ public class UserController {
         return ResponseEntity.ok( userService.buscarPorRole(role));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{login}")
     public ResponseEntity delete(@PathVariable String login){
         userService.delete(login);
         return ResponseEntity.noContent().build(); //Retorna Http 204 (Padrao Rest)
     }
+
 
     @PatchMapping("/update/{login}")
     public ResponseEntity updatePartial(@PathVariable String login, @RequestBody UserUpdateDTO data ){

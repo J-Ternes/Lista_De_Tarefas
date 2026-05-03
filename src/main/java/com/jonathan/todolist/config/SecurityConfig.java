@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize->authorize
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers("/tasks/**").hasRole("USER")
-                        .requestMatchers("/users/**").hasRole("ADMIN")
+                        .requestMatchers("/users/cadastro").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();

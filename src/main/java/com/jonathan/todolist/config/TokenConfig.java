@@ -19,6 +19,7 @@ public class TokenConfig {
     public String generateToken(UserModel user){
         return JWT.create()
                 .withSubject(user.getLogin())
+                .withClaim("role", user.getRole().name())
                 .withExpiresAt(Instant.now().plusSeconds(86400))
                 .withIssuedAt(Instant.now())
                 .sign(algorithm);
@@ -30,6 +31,7 @@ public class TokenConfig {
 
         DecodedJWT decode = JWT.require(algorithm).build().verify(token);
 
-        return Optional.of(JWTUserData.builder().login(decode.getSubject()).build());
+        return Optional.of(JWTUserData.builder().login(decode.getSubject())
+                .role(decode.getClaim("role").asString()).build());
     }
 }
