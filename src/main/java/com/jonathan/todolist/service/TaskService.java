@@ -6,7 +6,9 @@ import com.jonathan.todolist.dto.TaskUpdateDTO;
 import com.jonathan.todolist.dto.TasksRegisterDTO;
 import com.jonathan.todolist.exception.TaskNotFoundException;
 import com.jonathan.todolist.model.TaskModel;
+import com.jonathan.todolist.model.UserModel;
 import com.jonathan.todolist.repository.TaskRepository;
+import com.jonathan.todolist.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +21,12 @@ public class TaskService {
     @Autowired
     TaskRepository taskRepository;
 
-    public List<TaskResponseDTO> getAll(){
-        return taskRepository.findByFinalizarTarefaFalse().stream().map( task -> new TaskResponseDTO(
+    @Autowired
+    UserRepository userRepository;
+
+    public List<TaskResponseDTO> listMyTasks(String login){
+        UserModel user = userRepository.findByLogin(login);
+        return taskRepository.findByUser(user).stream().map( task -> new TaskResponseDTO(
                 task.getTitulo(), task.getDataInicio(),task.getDataFim()
         )).toList();
     }

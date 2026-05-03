@@ -1,5 +1,6 @@
 package com.jonathan.todolist.controller;
 
+import com.jonathan.todolist.config.JWTUserData;
 import com.jonathan.todolist.dto.TaskUpdateDTO;
 import com.jonathan.todolist.dto.TasksRegisterDTO;
 import com.jonathan.todolist.model.TaskModel;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -21,8 +23,9 @@ public class taskController {
 
     @PreAuthorize("hasRole('USER')") //Apenas USER pode ver as tasks
     @GetMapping("/dados")
-    public ResponseEntity getAll(){
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.getAll());
+    public ResponseEntity getAll(@AuthenticationPrincipal JWTUserData logUser) //Recebe o token e autentica
+     {
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.listMyTasks(logUser.login()));
     }
 
 
