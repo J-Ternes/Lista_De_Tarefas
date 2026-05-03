@@ -35,7 +35,7 @@ public class TaskCleanupService {
         }
     }
 
-    @Scheduled(cron = "0 20 1 * * *") // Roda todos os dias à meia noite
+    @Scheduled(cron = "0 0 0 * * *") // Roda todos os dias à meia noite
     public void deleteInactiveUsers() {
         LocalDateTime tempoDeCorte = LocalDateTime.now().minusMinutes(1);
 
