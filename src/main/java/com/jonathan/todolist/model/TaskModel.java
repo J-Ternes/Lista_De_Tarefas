@@ -51,6 +51,9 @@ public class TaskModel {
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;
 
+    @Column(name = "atualizado_em")
+    private LocalDateTime atualizadoEm;
+
     @PrePersist
     public void prePersist(){
         criadoEm = LocalDateTime.now();
