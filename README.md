@@ -197,33 +197,26 @@ Serviços agendados com `@Scheduled` que rodam diariamente à meia-noite (`cron 
    ```bash
    git clone https://github.com/J-Ternes/Lista_De_Tarefas.git
    cd Lista_De_Tarefas
-Configure o banco no application.properties:
-properties
-Copy
-# H2 (desenvolvimento)
-spring.datasource.url=jdbc:h2:mem:todolist
-spring.jpa.hibernate.ddl-auto=update
+   ```
+2. Configure o banco no `application.properties`:
+   ```properties
+   # H2 (desenvolvimento)
+   spring.datasource.url=jdbc:h2:mem:todolist
+   spring.jpa.hibernate.ddl-auto=update
 
-# PostgreSQL (produção)
-# spring.datasource.url=jdbc:postgresql://localhost:5432/todolist
-# spring.datasource.username=seu_usuario
-# spring.datasource.password=sua_senha
-Rode a aplicação:
-bash
-Copy
-./mvnw spring-boot:run
-Teste via Postman ou Insomnia:
-Faça login → pegue o token JWT
-Use Authorization: Bearer <token> nas rotas protegidas
-🗺️ Roadmap (próximas melhorias)
- Padronização de erros com @RestControllerAdvice (DTO de erro único)
- Paginação e filtros nas tasks
- Testes automatizados (unitários e de integração)
- Migrar secret JWT para variável de ambiente (JWT_SECRET)
- Refresh Token
- Deploy em nuvem (Railway, Render ou AWS)
-📄 Licença
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+   # PostgreSQL (produção)
+   # spring.datasource.url=jdbc:postgresql://localhost:5432/todolist
+   # spring.datasource.username=seu_usuario
+   # spring.datasource.password=sua_senha
+   ```
+3. Rode a aplicação:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+4. Teste via Postman ou Insomnia:
+   - Faça login → pegue o token JWT
+   - Use `Authorization: Bearer <token>` nas rotas protegidas
+
 
 
 ---
