@@ -1,18 +1,44 @@
-# ToDoList
+# 📋 Lista de Tarefas (To-Do API) — Spring Boot + Spring Security (JWT)
 
-## Stacks utilizadas:
-- Java com Spring Boot;
-- Spring Security;
-- Flyway;
-- JPA;
-- PostgreSQL;
-- Arquitetura MVC
+API REST para gerenciamento de tarefas com autenticação **stateless** via **JWT**, controle de acesso por **roles (RBAC)** e vínculo correto das tarefas ao usuário autenticado (`user_id` nas tasks). O projeto também possui **soft delete** e **limpeza automática (cleanup)** de registros inativos por agendamento.
 
 ---
-## Sobre:
-Projeo Backend de uma simples lista de tarefa criado para praticar a teoria estudada em Java. É possível criar tarefas com títulos, data de início, data de término e uma descrição.
-Utilizei o Spring Security para autenticação e autorização via JWT token. Criei duas roles: ADMIN ou USER. O usuário com a role ADMIN consegue criar novas tarefas e ver tarefas de outros usuários, além de promover um USER para ADMIN.
-O usuário com a role USER apenas consegue ver a sua tarefa.
-Existem duas tabelas: Users e Tasks. Construí uma relação One to Many (User -> Task).
 
-O projeto ainda está sendo desenvolvido com melhorias e novas features.
+## 🚀 Principais Features
+
+- ✅ **Autenticação via JWT (stateless)**
+- ✅ **Autorização / RBAC (Role-Based Access Control)**
+- ✅ **Vinculação de Task ao usuário autenticado**
+- ✅ **Soft Delete**
+- ✅ **Hard Delete automático (Cleanup Agendado)**
+- ✅ **Auditoria de datas (`criadoEm`, `atualizadoEm`)**
+- ✅ **Validações de regra de negócio**
+- ✅ **Tratamento de erros HTTP (401, 403)**
+
+---
+
+## 🛠️ Stack / Tecnologias
+
+| Tecnologia | Uso |
+|---|---|
+| Java | Linguagem principal |
+| Spring Boot | Framework base |
+| Spring Web | Camada REST |
+| Spring Data JPA / Hibernate | Persistência |
+| Spring Security | Autenticação e Autorização |
+| JWT (Auth0 Java JWT) | Geração e validação de tokens |
+| H2 | Banco de dados em desenvolvimento |
+| PostgreSQL | Banco de dados em produção |
+| Lombok | Redução de boilerplate |
+
+---
+
+## 🏗️ Arquitetura
+
+### Autenticação (JWT)
+
+1. Cliente faz `POST /auth/login` com credenciais.
+2. API valida credenciais e gera um JWT contendo:
+   - `sub` (subject): `login`
+   - `role` (claim): `ADMIN` ou `USER`
+3. Cliente envia o JWT no header:
