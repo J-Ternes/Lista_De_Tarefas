@@ -57,6 +57,14 @@ public class TaskModel {
     @PrePersist
     public void prePersist(){
         criadoEm = LocalDateTime.now();
+        atualizadoEm = LocalDateTime.now();
     }
+
+    @PreUpdate // 👈 estava faltando isso
+    public void preUpdate() {
+        atualizadoEm = LocalDateTime.now();
+    }
+
+
 
 }

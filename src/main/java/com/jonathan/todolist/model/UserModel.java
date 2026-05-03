@@ -41,9 +41,21 @@ public class UserModel implements UserDetails {
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;
 
+    @Column(name = "atualizado_em")
+    private LocalDateTime atualizadoEm;
+
+    @OneToMany(mappedBy = "idUser", cascade = CascadeType.ALL, orphanRemoval = true) //Quando o usuário for eliminado, as cascatas também serão
+    private List<TaskModel> tasks;
+
     @PrePersist
     public void prePersist(){
         criadoEm = LocalDateTime.now();
+        atualizadoEm = LocalDateTime.now();
+    }
+
+    @PreUpdate // 👈 estava faltando isso
+    public void preUpdate() {
+        atualizadoEm = LocalDateTime.now();
     }
 
 
