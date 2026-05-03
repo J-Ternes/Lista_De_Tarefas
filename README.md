@@ -6,6 +6,7 @@
 - Flyway;
 - JPA;
 - PostgreSQL;
+- Arquitetura MVC
 
 ---
 ## Sobre:
