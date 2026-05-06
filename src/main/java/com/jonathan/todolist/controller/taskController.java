@@ -6,6 +6,9 @@ import com.jonathan.todolist.dto.TasksRegisterDTO;
 import com.jonathan.todolist.model.TaskModel;
 import com.jonathan.todolist.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,9 +26,10 @@ public class taskController {
 
     @PreAuthorize("hasRole('USER')") //Apenas USER pode ver as tasks
     @GetMapping("/dados")
-    public ResponseEntity getAll(@AuthenticationPrincipal JWTUserData logUser) //Recebe o token e autentica
+    //@PageableDefault -> Paginação
+    public ResponseEntity getAll(@AuthenticationPrincipal JWTUserData logUser, @PageableDefault(size = 5, sort = "dataInicio", direction = Sort.Direction.ASC)Pageable pageable) //Recebe o token e autentica
      {
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.listMyTasks(logUser.login()));
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.listMyTasks(logUser.login(), pageable));
     }
 
 
