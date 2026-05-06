@@ -6,6 +6,7 @@ import com.jonathan.todolist.dto.LoginRequestDTO;
 import com.jonathan.todolist.dto.LoginResponseDTO;
 import com.jonathan.todolist.dto.TaskUpdateDTO;
 import com.jonathan.todolist.dto.TasksRegisterDTO;
+import com.jonathan.todolist.exception.AcessDeniedException;
 import com.jonathan.todolist.exception.TaskNotFoundException;
 import com.jonathan.todolist.model.TaskModel;
 import com.jonathan.todolist.model.UserModel;
@@ -63,15 +64,16 @@ public class TaskServiceAuth {
 
     }
 
-    public void delete(UUID id){
+    public void delete(UUID id, String login){
         TaskModel task = taskRepository.findById(id).orElseThrow(TaskNotFoundException::new);
+        validar(task,login); //Para validar antes de deletar
         task.setFinalizarTarefa(true);
         taskRepository.save(task);
     }
 
-    public void partialUpdate(UUID id, TaskUpdateDTO taskUpdate){
+    public void partialUpdate(UUID id, TaskUpdateDTO taskUpdate, String login){
         TaskModel task = taskRepository.findById(id).orElseThrow(TaskNotFoundException::new);
-
+        validar(task,login); //Para validar antes de deletar
         //Atualiza o título. OBS: .isBlanck() so funciona para String por que ela pode vim vazia: "  " ou ""
         if(taskUpdate.titulo() != null && !taskUpdate.titulo().isBlank()) task.setTitulo(taskUpdate.titulo());
         //Atualiza a data ou horário final
@@ -80,5 +82,11 @@ public class TaskServiceAuth {
         if(taskUpdate.dataInicio() != null ) task.setDataInicio(taskUpdate.dataInicio());
 
         taskRepository.save(task);
+    }
+
+    private void validar(TaskModel task, String login){
+       if(!task.getIdUser().getLogin().equals(login)){
+           throw new AcessDeniedException();
+       }
     }
 }

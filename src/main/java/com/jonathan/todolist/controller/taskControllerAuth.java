@@ -45,16 +45,18 @@ public class taskControllerAuth {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity delete(@PathVariable UUID id){
-        taskServiceAuth.delete(id);
+    public ResponseEntity delete(@PathVariable UUID id, @AuthenticationPrincipal JWTUserData loggedUser){
+        taskServiceAuth.delete(id, loggedUser.login());
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/atualizar/{id}")
-    public ResponseEntity update(@PathVariable UUID id, @RequestBody TaskUpdateDTO taskUpdate){
-        taskServiceAuth.partialUpdate(id, taskUpdate);
+    public ResponseEntity update(@PathVariable UUID id, @RequestBody TaskUpdateDTO taskUpdate,@AuthenticationPrincipal JWTUserData loggedUser){
+        taskServiceAuth.partialUpdate(id, taskUpdate, loggedUser.login());
         return ResponseEntity.ok("Atualização realizada com sucesso!");
 
     }
+
+
 
 }
