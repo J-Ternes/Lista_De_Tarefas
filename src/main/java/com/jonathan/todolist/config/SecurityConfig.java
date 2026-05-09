@@ -46,6 +46,11 @@ public class SecurityConfig {
                 }))
                 .authorizeHttpRequests(authorize->authorize
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
                         .requestMatchers("/tasks/**").hasRole("USER")
                         .requestMatchers("/users/cadastro").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()

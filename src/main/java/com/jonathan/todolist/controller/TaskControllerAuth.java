@@ -7,6 +7,8 @@ import com.jonathan.todolist.dto.TaskUpdateDTO;
 import com.jonathan.todolist.dto.TasksRegisterDTO;
 import com.jonathan.todolist.repository.UserRepository;
 import com.jonathan.todolist.service.TaskServiceAuth;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,9 @@ public class TaskControllerAuth {
 
     }
 
+    @Operation(summary = "Criar tarefa", description = "Apenas Usuários com a role Admin podem criar novas tarefas")
+    @ApiResponse(responseCode = "201", description = "Tarefa criada com sucesso")
+    @ApiResponse(responseCode = "400", description = "Dados inválidos")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody TasksRegisterDTO registerDTO,
@@ -43,6 +48,9 @@ public class TaskControllerAuth {
         return ResponseEntity.status(HttpStatus.CREATED).body(registerDTO);
     }
 
+    @Operation(summary = "Deletar tarefa", description = "Apenas Usuários com a role Admin podem deletar as tarefas")
+    @ApiResponse(responseCode = "204", description = "Tarefa deletada")
+    @ApiResponse(responseCode = "404", description = "Tarefa não encontrada")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable UUID id, @AuthenticationPrincipal JWTUserData loggedUser){
         taskServiceAuth.delete(id, loggedUser.login());

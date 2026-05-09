@@ -2,6 +2,9 @@ package com.jonathan.todolist.controller;
 
 import com.jonathan.todolist.config.JWTUserData;
 import com.jonathan.todolist.service.TaskService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,11 +17,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tasks")
+@Tag(name = "Tasks", description = "Operações relacionadas às tarefas")
 public class TaskController {
 
     @Autowired
     TaskService taskService;
 
+    @Operation(summary = "Listar todas as tarefas", description = "Retorna todas as tarefas do usuário logado")
+    @ApiResponse(responseCode = "200", description = "Tarefas retornadas com sucesso")
     @PreAuthorize("hasRole('USER')") //Apenas USER pode ver as tasks
     @GetMapping("/dados")
     //@PageableDefault -> Paginação
