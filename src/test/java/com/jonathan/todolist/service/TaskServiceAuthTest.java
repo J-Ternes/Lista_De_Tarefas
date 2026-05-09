@@ -11,7 +11,6 @@ import com.jonathan.todolist.model.TaskModel;
 import com.jonathan.todolist.model.UserModel;
 import com.jonathan.todolist.repository.TaskRepository;
 import com.jonathan.todolist.repository.UserRepository;
-import com.jonathan.todolist.service.TaskServiceAuth;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
