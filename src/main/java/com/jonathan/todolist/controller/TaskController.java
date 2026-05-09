@@ -1,9 +1,6 @@
 package com.jonathan.todolist.controller;
 
 import com.jonathan.todolist.config.JWTUserData;
-import com.jonathan.todolist.dto.TaskUpdateDTO;
-import com.jonathan.todolist.dto.TasksRegisterDTO;
-import com.jonathan.todolist.model.TaskModel;
 import com.jonathan.todolist.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -15,11 +12,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/tasks")
-public class taskController {
+public class TaskController {
 
     @Autowired
     TaskService taskService;

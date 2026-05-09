@@ -58,7 +58,7 @@ public class TaskServiceTest {
         Page<TaskModel> taskPage = new PageImpl<>(List.of(taskModel));
 
         when(userRepository.findByLogin("jonathan")).thenReturn(userModel);
-        when(taskRepository.findByUser(userModel,pageable)).thenReturn(taskPage);
+        when(taskRepository.findByIdUser(userModel,pageable)).thenReturn(taskPage);
 
         Page<TaskResponseDTO> result = taskService.listMyTasks("jonathan",pageable);
 
@@ -66,7 +66,7 @@ public class TaskServiceTest {
         assertThat(result.getContent().get(0).titulo()).isEqualTo("Primeiro Test Unitario");
 
         verify(userRepository, times(1)).findByLogin("jonathan");
-        verify(taskRepository, times(1)).findByUser(userModel, pageable);
+        verify(taskRepository, times(1)).findByIdUser(userModel, pageable);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class TaskServiceTest {
         Page<TaskModel> emptyPage = new PageImpl<>(List.of());
 
         when(userRepository.findByLogin("jonathan")).thenReturn(userModel);
-        when(taskRepository.findByUser(userModel, pageable)).thenReturn(emptyPage);
+        when(taskRepository.findByIdUser(userModel, pageable)).thenReturn(emptyPage);
 
         Page<TaskResponseDTO> result = taskService.listMyTasks("jonathan", pageable);
 

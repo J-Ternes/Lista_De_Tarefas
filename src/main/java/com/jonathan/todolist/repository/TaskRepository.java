@@ -18,7 +18,7 @@ public interface TaskRepository extends JpaRepository<TaskModel, UUID> {
     List<TaskModel> findByFinalizarTarefaTrueAndAtualizadoEm(LocalDateTime date);
 
     // Com paginação
-    Page<TaskModel> findByUser(UserModel user, Pageable pageable);
+    Page<TaskModel> findByIdUser(UserModel idUser, Pageable pageable);
 
 
 }

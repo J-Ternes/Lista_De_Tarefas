@@ -5,7 +5,6 @@ import com.jonathan.todolist.dto.LoginRequestDTO;
 import com.jonathan.todolist.dto.LoginResponseDTO;
 import com.jonathan.todolist.dto.TaskUpdateDTO;
 import com.jonathan.todolist.dto.TasksRegisterDTO;
-import com.jonathan.todolist.model.UserModel;
 import com.jonathan.todolist.repository.UserRepository;
 import com.jonathan.todolist.service.TaskServiceAuth;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth")
-public class taskControllerAuth {
+public class TaskControllerAuth {
 
     @Autowired
     TaskServiceAuth taskServiceAuth;

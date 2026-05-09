@@ -23,7 +23,7 @@ public class TaskService {
     //Com paginação
     public Page<TaskResponseDTO> listMyTasks(String login, Pageable pageable){
         UserModel user = userRepository.findByLogin(login);
-        return taskRepository.findByUser(user, pageable).map( task -> new TaskResponseDTO(
+        return taskRepository.findByIdUser(user, pageable).map( task -> new TaskResponseDTO(
                 task.getTitulo(), task.getDataInicio(),task.getDataFim()
         ));
     }
