@@ -29,6 +29,7 @@ public class TaskControllerAuth {
     UserRepository userRepository;
 
 
+    @Operation(summary = "Faça o login para criar o token", description = "Com o token e a role USER você poderá criar, atualizar e deletar tarefas")
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login (@RequestBody LoginRequestDTO requestDTO){
         LoginResponseDTO response = taskServiceAuth.loginAuthToken(requestDTO);

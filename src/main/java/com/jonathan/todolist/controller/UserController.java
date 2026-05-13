@@ -6,6 +6,7 @@ import com.jonathan.todolist.dto.UserUpdateDTO;
 import com.jonathan.todolist.model.UserRole;
 import com.jonathan.todolist.repository.UserRepository;
 import com.jonathan.todolist.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +25,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Operation(summary = "Criar novos cadastros de usuários")
     @PostMapping("/cadastro")
     public ResponseEntity cadastrar(@RequestBody UserRegisterDTO data){
         userService.cadastrarNewUser(data);

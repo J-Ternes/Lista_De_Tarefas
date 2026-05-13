@@ -60,11 +60,8 @@ public class TaskModel {
         atualizadoEm = LocalDateTime.now();
     }
 
-    @PreUpdate // 👈 estava faltando isso
+    @PreUpdate
     public void preUpdate() {
         atualizadoEm = LocalDateTime.now();
     }
-
-
-
 }

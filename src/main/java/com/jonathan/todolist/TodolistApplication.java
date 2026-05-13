@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "ToDoList",description = "API de uma lista de tarefas", version = "1"))
 public class TodolistApplication {
 
 	public static void main(String[] args) {
