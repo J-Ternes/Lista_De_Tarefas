@@ -218,5 +218,79 @@ Serviços agendados com `@Scheduled` que rodam diariamente à meia-noite (`cron 
    - Use `Authorization: Bearer <token>` nas rotas protegidas
 
 
+  # 📄 Documentação da API - Swagger UI
+
+## 🔗 Acesso
+
+Com a aplicação rodando localmente, acesse:
+
+```
+http://localhost:8080/swagger-ui.html
+```
+
+---
+
+## 🔐 Como autenticar
+
+A API utiliza autenticação via **JWT (Bearer Token)**. Siga os passos abaixo:
+
+1. Acesse o endpoint `POST /auth/login`
+2. Envie suas credenciais no body:
+```json
+{
+  "login": "seu_usuario",
+  "password": "sua_senha"
+}
+```
+3. Copie o token retornado no campo `token`
+4. Clique no botão **🔒 Authorize** (canto superior direito do Swagger)
+5. Cole o token no campo **Value** e clique em **Authorize**
+
+> A partir deste momento, todas as requisições serão enviadas com o header `Authorization: Bearer <token>` automaticamente.
+
+---
+
+## 📚 Endpoints disponíveis
+
+### 👤 Auth
+| Método | Rota | Descrição | Auth |
+|--------|------|-----------|------|
+| `POST` | `/auth/login` | Realiza login e retorna o JWT | ❌ |
+| `POST` | `/auth/register` | Cadastra um novo usuário | ❌ |
+
+### ✅ Tasks
+| Método | Rota | Descrição | Auth |
+|--------|------|-----------|------|
+| `GET` | `/tasks` | Lista todas as tarefas | ✅ |
+| `POST` | `/tasks` | Cria uma nova tarefa | ✅ |
+| `PUT` | `/tasks/{id}` | Atualiza uma tarefa | ✅ |
+| `DELETE` | `/tasks/{id}` | Remove uma tarefa | ✅ |
+
+### 👥 Users
+| Método | Rota | Descrição | Auth |
+|--------|------|-----------|------|
+| `GET` | `/users` | Lista todos os usuários | ✅ |
+| `GET` | `/users/role/{role}` | Busca usuários por role | ✅ |
+| `PUT` | `/users/{login}` | Atualiza um usuário | ✅ |
+| `DELETE` | `/users/{login}` | Remove um usuário | ✅ |
+
+---
+
+## 🛡️ Roles disponíveis
+
+| Role | Descrição |
+|------|-----------|
+| `ADMIN` | Acesso total ao sistema |
+| `USER` | Acesso padrão |
+
+---
+
+## ⚙️ Tecnologias utilizadas na documentação
+
+- [SpringDoc OpenAPI 3.0.3](https://springdoc.org/)
+- Swagger UI
+- JWT Bearer Authentication
+
+
 
 ---
